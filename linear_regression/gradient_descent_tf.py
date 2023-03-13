@@ -1,10 +1,10 @@
 import tensorflow as tf
 import numpy as np
 
-# X = np.array([1, 2, 3])
-# Y = np.array([1, 2, 3])
-X = [1, 2, 3]
-Y = [1, 2, 3]
+X = np.array([1, 2, 3])
+Y = np.array([1, 2, 3])
+# X = [1, 2, 3]
+# Y = [1, 2, 3]
 
 
 def cost_func(W, X, Y):
