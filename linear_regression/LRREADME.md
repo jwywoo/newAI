@@ -58,3 +58,6 @@ Now we can make Gradient Descent Algorithm like this.
 Learning rate is most likely less than 1 ,and it is about how much we want to apply.
 This is already implemented as `tape.gradient()` in tensorflow.
 
+Gradient Descent is derivative of cost function.
+
+#### Conclusion: Gradient Descent Algorithm the finds lowest cost 
