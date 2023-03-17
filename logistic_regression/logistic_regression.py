@@ -21,6 +21,7 @@ b = tf.Variable(tf.random.normal([1]), name='bias')
 
 learning_rate = 0.001
 
+
 # Hypothesis
 def hypothesis(x):
     return tf.sigmoid(tf.matmul(x, W) + b)
@@ -58,4 +59,3 @@ if temp > 0.5:
     print("pass")
 else:
     print("fail")
-
