@@ -41,10 +41,10 @@ n_epochs = 2000
 for i in range(n_epochs):
     with tf.GradientTape() as tape:
         # Cost
-        cost = tf.reduce_mean(
+        cost = -1 * tf.reduce_mean(
             y_data * tf.math.log(hypothesis(x_data))
             + (1 - y_data) * tf.math.log(1 - hypothesis(x_data)))
-
+    print(cost)
     # Gradient
     W_grad, b_grad = tape.gradient(cost, [W, b])
     W.assign_sub(learning_rate * W_grad)

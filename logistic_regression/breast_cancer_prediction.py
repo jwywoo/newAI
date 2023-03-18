@@ -33,7 +33,6 @@ W = tf.Variable(tf.random.normal([len(symptoms[0]), 1]), name='Weight')
 # b = tf.Variable(tf.random.normal([1]), name="Bias")
 learning_rate = 0.001
 
-print(tf.sigmoid(tf.matmul(symptoms,W)))
 
 # Hypothesis
 def hypothesis(x):
@@ -47,15 +46,14 @@ n_epochs = 3
 for i in range(n_epochs):
     with tf.GradientTape() as tape:
         # Cost
-        cost = tf.reduce_mean(
+        cost = -1 * tf.reduce_mean(
             diagnosis_values * tf.math.log(hypothesis(symptoms))
             + (1 - diagnosis_values) * tf.math.log(1 - hypothesis(symptoms))
         )
 
+    print(cost)
     # Gradient
     W_grad = tape.gradient(cost, W)
-    print(W_grad)
     W.assign_sub(learning_rate * W_grad)
-
 
 print("Weights after training")
