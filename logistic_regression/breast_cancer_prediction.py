@@ -36,3 +36,11 @@ b = tf.Variable(tf.random.normal([1]), name="Bias")
 def hypoethesis(x):
     return tf.sigmoid(tf.matmul(x, W) + b)
 
+n_epochs = 2000
+for i in range(n_epochs):
+    with tf.GradientTape as tape:
+        # Cost
+        cost = tf.reduce_mean(
+            diagnosis_values * tf.math.log(hypoethesis(symptoms))
+            + (1 - diagnosis_values) * tf.math.log(1 - hypoethesis(symptoms))
+        )
