@@ -18,29 +18,39 @@ for i in range(len(id_diagnosis)):
         temp.append(0)
     else:
         temp.append(1)
-diagnosis_values = np.array(temp)
+diagnosis_values = np.array(temp, dtype=np.float32)
 # x_values
-symptoms = breast_np[:, 2:]
+symptoms = np.asarray(breast_np[:, 2:]).astype(np.float32)
 
 # Weight and bias
 # Dimension of Weight
 # number of rows of weight got to be same as number of columns of X
 # number of columns of weight got to be same as number of columns of Y
 # Current number of columns are 32 thus W matrix got to be 32X1
-# print(len(csv_dataframe.columns))
-W = tf.Variable(tf.random.normal([len(breast_csv), 1]), name='Weight')
+
+# W = tf.Variable(tf.random.normal([len(breast_csv.columns) - 2, 1]), name='Weight')
+W = tf.Variable(tf.random.normal([len(symptoms[0]), 1]), name='Weight')
 b = tf.Variable(tf.random.normal([1]), name="Bias")
+learning_rate = 0.001
 
 
 # Hypothesis
 def hypoethesis(x):
     return tf.sigmoid(tf.matmul(x, W) + b)
 
+
+# print(W,b)
+
 n_epochs = 2000
 for i in range(n_epochs):
-    with tf.GradientTape as tape:
+    with tf.GradientTape() as tape:
         # Cost
         cost = tf.reduce_mean(
             diagnosis_values * tf.math.log(hypoethesis(symptoms))
             + (1 - diagnosis_values) * tf.math.log(1 - hypoethesis(symptoms))
         )
+
+    # Gradient
+    W_grad, b_grad = tape.gradient(cost, [W, b])
+    W.assign_sub(learning_rate * W_grad)
+    b.assign_sub(learning_rate * b_grad)
