@@ -49,8 +49,8 @@ def hypothesis(x):
 
 # Cost function
 def cost_fn(X, Y):
-    logits = hypothesis(X)
-    cost = -tf.reduce_sum(Y * tf.math.log(logits), axis=1)
+    logit = hypothesis(X)
+    cost = -tf.reduce_sum(Y * tf.math.log(logit), axis=1)
     return tf.reduce_mean(cost)
 
 
@@ -61,4 +61,14 @@ def gradient_fn(X, Y):
         return grads
 
 
-print(gradient_fn(x_data,y_data))
+def fit(X, Y, epochs=2000, verbose=100, learning_rate=0.5):
+    for i in range(epochs):
+        w_grad, b_grad = gradient_fn(X, Y)
+        W.assign_sub(learning_rate * w_grad)
+        b.assign_sub(learning_rate * b_grad)
+        # Checking whether test is going right or wrong
+        if (i == 0) | ((i + 1) % verbose == 0):
+            print("Loss at epoch %d, %f" % (i + 1, cost_fn(X, Y).numpy()))
+
+
+fit(x_data, y_data)
