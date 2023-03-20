@@ -30,9 +30,19 @@ nb_classes = 3
 # Weight and Bias
 # number of rows of weight got to be same number of column of x_data
 # number of column of weight got to be same as y_data's column
-W = tf.Variable(tf.random.normal([4,nb_classes]), name="weight")
+W = tf.Variable(tf.random.normal([4, nb_classes]), name="weight")
 # bias's rows and columns got to be same as multiplication of x_data and weight
 b = tf.Variable(tf.random.normal([nb_classes]), name='bias')
 
+
 # Hypothesis
-hypothesis = tf.nn.softmax(tf.matmul(x_data,W) + b)
+# hypothesis = tf.nn.softmax(tf.matmul(x_data,W) + b)
+# print(hypothesis)
+def hypothesis(x):
+    return tf.nn.softmax(tf.matmul(x, W) + b)
+
+
+# hypothesis(x_data)
+# sample_db = [[1, 2, 3, 4]]
+# sample_db = np.array(sample_db, dtype=np.float32)
+# print(hypothesis(sample_db))
