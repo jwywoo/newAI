@@ -42,18 +42,30 @@ def hypothesis(x):
     return tf.nn.softmax(tf.matmul(x, W) + b)
 
 
+print("Before Training")
+prediction = hypothesis(x_data)
+print(prediction)
+print(tf.argmax(prediction, 1))
+print(tf.argmax(y_data, 1))
+
+
 # hypothesis(x_data)
 # sample_db = [[1, 2, 3, 4]]
 # sample_db = np.array(sample_db, dtype=np.float32)
 # print(hypothesis(sample_db))
 
 # Cost function
+# inputs: X data and Y data
+# returns: cost of hypothesis(X)
 def cost_fn(X, Y):
     logit = hypothesis(X)
     cost = -tf.reduce_sum(Y * tf.math.log(logit), axis=1)
     return tf.reduce_mean(cost)
 
 
+# Gradient function
+# inputs: X data, Y data
+# returns: gradients(slope) of current cost
 def gradient_fn(X, Y):
     with tf.GradientTape() as tape:
         cost = cost_fn(X, Y)
@@ -61,6 +73,9 @@ def gradient_fn(X, Y):
         return grads
 
 
+# Training function
+# inputs: X data, Y data, epochs number of training verbose, learning rate
+# return: nothing -> training purpose
 def fit(X, Y, epochs=2000, verbose=100, learning_rate=0.5):
     for i in range(epochs):
         w_grad, b_grad = gradient_fn(X, Y)
@@ -72,3 +87,10 @@ def fit(X, Y, epochs=2000, verbose=100, learning_rate=0.5):
 
 
 fit(x_data, y_data)
+
+# After training -> argmax
+print("After training")
+prediction = hypothesis(x_data)
+print(prediction)
+print(tf.argmax(prediction, 1))
+print(tf.argmax(y_data, 1))
