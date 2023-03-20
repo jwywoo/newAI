@@ -46,3 +46,13 @@ def hypothesis(x):
 # sample_db = [[1, 2, 3, 4]]
 # sample_db = np.array(sample_db, dtype=np.float32)
 # print(hypothesis(sample_db))
+
+# Cost function
+def cost_fn(X, Y):
+    logits = hypothesis(X)
+    cost = -tf.reduce_sum(Y * tf.math.log(logits), axis=1)
+    print(cost)
+    return tf.reduce_mean(cost)
+
+
+print(cost_fn(x_data, y_data))
