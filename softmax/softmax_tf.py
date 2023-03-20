@@ -51,8 +51,14 @@ def hypothesis(x):
 def cost_fn(X, Y):
     logits = hypothesis(X)
     cost = -tf.reduce_sum(Y * tf.math.log(logits), axis=1)
-    print(cost)
     return tf.reduce_mean(cost)
 
 
-print(cost_fn(x_data, y_data))
+def gradient_fn(X, Y):
+    with tf.GradientTape() as tape:
+        cost = cost_fn(X, Y)
+        grads = tape.gradient(cost, [W, b])
+        return grads
+
+
+print(gradient_fn(x_data,y_data))
